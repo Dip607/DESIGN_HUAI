@@ -1,0 +1,6 @@
+<form method="POST" action="{% url 'generate_poster' %}">
+    {% csrf_token %}
+    <input type="text" name="prompt" placeholder="Describe your poster..." class="form-control mb-3" required>
+    <button type="submit" class="btn btn-primary">Generate Poster Plan</button>
+  </form>
+  

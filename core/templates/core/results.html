@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Design Results</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Custom Styles and Animations -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #475569 75%, #64748b 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Animated gradient background */
+        .animated-gradient {
+            background: linear-gradient(-45deg, #0f172a, #1e293b, #334155, #475569);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            position: relative;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: linear-gradient(45deg, #3b82f6, #06b6d4, #8b5cf6);
+            border-radius: 50%;
+            animation: float 8s infinite linear;
+            box-shadow: 0 0 6px rgba(59, 130, 246, 0.6);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Enhanced glass morphism */
+        .glass-morphism {
+            background: rgba(15, 23, 42, 0.3);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        /* Glowing effects */
+        .glow-text {
+            text-shadow: 
+                0 0 10px rgba(59, 130, 246, 0.5),
+                0 0 20px rgba(59, 130, 246, 0.3),
+                0 0 30px rgba(59, 130, 246, 0.2);
+        }
+
+        .glow-border {
+            box-shadow: 
+                0 0 20px rgba(59, 130, 246, 0.3),
+                inset 0 0 20px rgba(59, 130, 246, 0.1);
+        }
+
+        /* Enhanced masonry layout */
+        .masonry {
+            column-count: 3;
+            column-gap: 2rem;
+        }
+        @media (max-width: 1024px) { .masonry { column-count: 2; column-gap: 1.5rem; } }
+        @media (max-width: 768px) { .masonry { column-count: 1; column-gap: 1rem; } }
+
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 2rem;
+            transform: translateY(0);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .masonry-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.4),
+                0 0 50px rgba(59, 130, 246, 0.3);
+        }
+
+        .masonry-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s;
+            z-index: 2;
+        }
+
+        .masonry-item:hover::before {
+            left: 100%;
+        }
+
+        /* Enhanced loading spinner */
+        #loading-spinner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(15, 23, 42, 0.95);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(10px);
+        }
+
+        #loading-spinner.hidden {
+            display: none;
+        }
+
+        .loading-ring {
+            display: inline-block;
+            position: relative;
+            width: 80px;
+            height: 80px;
+        }
+
+        .loading-ring div {
+            box-sizing: border-box;
+            display: block;
+            position: absolute;
+            width: 64px;
+            height: 64px;
+            margin: 8px;
+            border: 4px solid transparent;
+            border-top-color: #3b82f6;
+            border-right-color: #06b6d4;
+            border-radius: 50%;
+            animation: loadingRing 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+            filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5));
+        }
+
+        .loading-ring div:nth-child(2) {
+            animation-delay: -0.3s;
+            border-top-color: #06b6d4;
+            border-right-color: #8b5cf6;
+        }
+
+        .loading-ring div:nth-child(3) {
+            animation-delay: -0.6s;
+            border-top-color: #8b5cf6;
+            border-right-color: #3b82f6;
+        }
+
+        @keyframes loadingRing {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Fade in animations */
+        .fade-in {
+            animation: fadeInAnimation 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            opacity: 0;
+        }
+        
+        .fade-in-delay-1 { animation-delay: 0.3s; }
+        .fade-in-delay-2 { animation-delay: 0.6s; }
+        .fade-in-delay-3 { animation-delay: 0.9s; }
+
+        @keyframes fadeInAnimation {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px) scale(0.95);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Enhanced button */
+        .glow-button {
+            background: linear-gradient(135deg, #3b82f6, #06b6d4);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 
+                0 10px 30px rgba(59, 130, 246, 0.3),
+                0 0 20px rgba(59, 130, 246, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glow-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .glow-button:hover::before {
+            left: 100%;
+        }
+
+        .glow-button:hover {
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 
+                0 15px 40px rgba(59, 130, 246, 0.4),
+                0 0 30px rgba(59, 130, 246, 0.3);
+        }
+
+        /* Image overlay effects */
+        .image-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            padding: 1rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .masonry-item:hover .image-overlay {
+            transform: translateY(0);
+        }
+
+        /* Original image enhancement */
+        .original-image-container {
+            position: relative;
+            display: inline-block;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                0 0 30px rgba(59, 130, 246, 0.2);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .original-image-container:hover {
+            transform: scale(1.05);
+            box-shadow: 
+                0 30px 60px rgba(0, 0, 0, 0.4),
+                0 0 50px rgba(59, 130, 246, 0.3);
+        }
+
+        /* Section headers */
+        .section-header {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+
+        .section-header::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6, #06b6d4);
+            border-radius: 2px;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+        }
+
+        /* Responsive improvements */
+        @media (max-width: 768px) {
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            .masonry-item {
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        /* Pulse animation for loading */
+        .pulse-glow {
+            animation: pulseGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            from {
+                box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+            }
+            to {
+                box-shadow: 0 0 30px rgba(59, 130, 246, 0.4);
+            }
+        }
+    </style>
+</head>
+<body class="animated-gradient text-gray-200">
+
+    <!-- Floating particles background -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Enhanced Loading Spinner -->
+    <div id="loading-spinner">
+        <div class="flex flex-col items-center">
+            <div class="loading-ring">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+            <p class="text-white mt-4 text-lg glow-text">Generating your mood board...</p>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-12 relative z-10">
+        <!-- Enhanced Header -->
+        <div class="text-center mb-12 fade-in">
+            <h2 class="text-4xl md:text-5xl font-extrabold text-white mb-4 glow-text section-header">
+                🎨 Your Mood Board Results
+            </h2>
+            <p class="text-lg text-blue-200 max-w-2xl mx-auto">
+                Discover stunning design inspirations generated from your uploaded image
+            </p>
+        </div>
+        
+        <!-- Enhanced Uploaded Image Display -->
+        <div class="mb-16 text-center fade-in fade-in-delay-1">
+            <h4 class="text-2xl font-bold text-blue-200 mb-6 section-header">Original Image</h4>
+            <div class="original-image-container glass-morphism p-4">
+                <img src="{{ image.image.url }}" class="rounded-xl shadow-lg max-h-96 w-auto" alt="Uploaded Image">
+            </div>
+        </div>
+
+        <!-- Enhanced Inspiration Images Gallery -->
+        <div class="fade-in fade-in-delay-2">
+            <h4 class="text-3xl font-bold text-white mb-8 text-center section-header glow-text">
+                💡 Design Inspirations
+            </h4>
+            {% if inspiration_images %}
+                <div class="masonry">
+                    {% for img_data in inspiration_images %}
+                        <div class="masonry-item rounded-2xl glass-morphism overflow-hidden glow-border">
+                            <a href="{{ img_data.url }}" target="_blank" rel="noopener" class="block relative group">
+                                <img src="{{ img_data.image }}" alt="Design Idea" class="w-full h-auto block transition-transform duration-300 group-hover:scale-110">
+                                <div class="image-overlay">
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm font-semibold">{{ img_data.source }}</span>
+                                        <svg class="w-4 h-4 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="absolute top-2 right-2 bg-blue-500/80 backdrop-blur-sm text-white text-xs font-semibold px-2 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                    View Full Size
+                                </div>
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="text-center py-16">
+                    <div class="glass-morphism rounded-2xl p-8 max-w-md mx-auto">
+                        <svg class="w-16 h-16 text-blue-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.29-1.009-5.824-2.562M15 6.306a7.962 7.962 0 00-6 0m6 0V4a2 2 0 00-2-2h-2a2 2 0 00-2 2v2.306z"></path>
+                        </svg>
+                        <p class="text-gray-300 text-lg">No inspiration images found.</p>
+                        <p class="text-gray-400 text-sm mt-2">Try uploading a different image for better results.</p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Enhanced Action Button -->
+        <div class="text-center mt-16 fade-in fade-in-delay-3">
+            <a href="/" class="glow-button text-white font-bold py-4 px-16 rounded-full text-lg inline-block">
+                Analyze Another Image
+            </a>
+        </div>
+    </div>
+
+    <!-- Enhanced Footer -->
+    <footer class="bg-slate-900/30 backdrop-blur-sm text-center p-6 mt-16 border-t border-blue-500/20 relative z-10">
+        <p class="text-gray-400">&copy; 2024 Aura Design. All Rights Reserved.</p>
+        <div class="flex justify-center space-x-6 mt-2">
+            <a href="#" class="text-gray-400 hover:text-blue-300 transition duration-300 relative group">
+                About
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-300 transition-all duration-300 group-hover:w-full"></span>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-blue-300 transition duration-300 relative group">
+                Privacy Policy
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-300 transition-all duration-300 group-hover:w-full"></span>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-blue-300 transition duration-300 relative group">
+                Contact Us
+                <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-300 transition-all duration-300 group-hover:w-full"></span>
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (Math.random() * 4 + 6) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Initialize particles when page loads
+        window.addEventListener('load', function () {
+            createParticles();
+            // Hide the loading spinner once the page's content is fully loaded
+            document.getElementById('loading-spinner').classList.add('hidden');
+        });
+
+        // Add staggered animation to masonry items
+        document.addEventListener('DOMContentLoaded', function() {
+            const masonryItems = document.querySelectorAll('.masonry-item');
+            masonryItems.forEach((item, index) => {
+                item.style.animationDelay = `${index * 0.1}s`;
+                item.classList.add('fade-in');
+            });
+        });
+    </script>
+</body>
+</html>
